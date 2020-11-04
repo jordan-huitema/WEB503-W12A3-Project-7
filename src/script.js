@@ -38,7 +38,7 @@ const ball = {
   x: canvas.width / 2, //Start in the middle
   y: canvas.height / 2,// Start in the middle
   size: 10, // ball 
-  speed: 4, // Animation  speed prop
+  speed: 25, // Animation  speed prop
   dx: 4, // Animation direction 
   dy: -4 // Animation direction with - so it does not move down
 }
@@ -47,7 +47,7 @@ const ball = {
 const paddle = {
   x: canvas.width / 2 - 40, // We are taking half width of the paddle
   y: canvas.height - 20, // Center in the middle
-  w: 80,
+  w: 1000,
   h: 10,
   speed: 8,
   dx: 0 // Only moving on the x-axes 
