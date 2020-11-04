@@ -105,4 +105,37 @@ function drawBricks() {
 function movePaddle() {         // Every time draw on the canvas with can re-draw with certain element
     paddle.x += paddle.dx       // Paddle will not move until we use the keyboards events
     
+    // Wall detection
+    if(paddle.x + paddle.w > canvas.width) {    // Entire width of the canvas
+        paddle.x = canvas.width - paddle.w      // Minus the paddle width
+    }
+
+    if(paddle.x < 0) {          // 0 from the x-axes and this is for the borders detection
+        paddle.x = 0
+    }
+}
+
+// Move ball on canvas
+function moveBall() {
+    ball.x += ball.dx;          // Append the ball on x-axes
+    ball.y += ball.dy;          // Append the ball on y-axes
+
+    // Wall collisoin (right/left)
+    if(ball.x + ball.size > canvas.width || ball.x - ball.size < 0) { // Right and left walls
+        ball.dx *= -1; // Flip the balls direction so it bounces
+    }
+
+    // Wall collision (top/bottom)
+    if(ball.y + ball.size > canvas.height || ball.y - ball.size < 0) {
+        ball.dy *= -1; // Flip the balls direction so it bounces
+    }
+
+    // Paddle collision
+    if(
+        ball.x - ball.size > paddle.x &&                // Always to in consideration the object size of ball and this check
+        ball.x + ball.size < paddle.x + paddle.w &&     // checking the right side
+        ball.y + ball.size > paddle.y
+    ) {
+        ball.dy = -ball.speed; // Reverse the balls speed so it bouces 
+    }
 }
