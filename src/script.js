@@ -138,4 +138,63 @@ function moveBall() {
     ) {
         ball.dy = -ball.speed; // Reverse the balls speed so it bouces 
     }
+
+    // Brick collision 
+    bricks.forEach(column => {      // Loop through bricks array
+        column.forEach(brick => {
+            if(brick.visible) {     // Make sure the bricks are visible
+                if (
+                    ball.x - ball.size > brick.x &&             // Left brick side check
+                    ball.x + ball.size < brick.x + brick.w &&   // Right brick side check
+                    ball.y + ball.size > brick.y &&             // Top brick side check
+                    ball.y - ball.size < brick.y + brick.h      // Bottom brick side check
+                ) {
+                    ball.dy *= -1           // Bounce off the brick
+                    brick.visible = false   // Once bounce off the brick make it visible false
+                    increaseScore()         // Change the score
+                }
+            }
+        })
+    })
+
+    // Hit the bottom wall - lose
+    if(ball.y + ball.size > canvas.height) {    // If hit bottom wall then lose
+        showAllBricks()                         // Redraw
+        score = 0                               // Reset score
+    }
+}
+
+// Increase score
+function increaseScore() {
+    score++                                             // Increment score
+
+    if(score % (brickRowCount * brickRowCount) === 0) { // Check the if there are no bricks if true redraw
+        showAllBricks()                                 // Create bricks wall
+    }
+}
+
+// Make all bricks appear
+function showAllBricks() {
+    bricks.forEach( column => {
+        column.forEach( brick => brick.visible = true)
+    })
+}
+
+// REVIEW Setup all the drawing
+function draw() {
+    // Clear the canvas to make ensure events are ended
+    ctx.clearRect(0,0, canvas.width, canvas.height)
+
+    drawBall()
+    drawPaddle()
+    drawScore()
+    drawBricks()
+}
+
+// Update canvas drawing and animation
+function update() {
+    movePaddle()
+    moveBall()
+
+    // 
 }
